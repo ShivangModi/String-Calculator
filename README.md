@@ -1,2 +1,0 @@
-# String-Calculator-TDD-
-Python
