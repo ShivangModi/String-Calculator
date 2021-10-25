@@ -1,5 +1,10 @@
+count = 0
+
 class StringCalculator:
     def add(self, numbers):
+        global count
+        count += 1
+
         if len(numbers) == 0:
             return 0
         
@@ -17,10 +22,18 @@ class StringCalculator:
                 return sum(num)
         except ValueError as ve:
             print(ve)
+    
+    # returns how many times add() method was invoked
+    def GetCalledCount(self):
+        return count
 
 
 if __name__ == '__main__':
     calc = StringCalculator()
+
+    # how many times add() method was invoked
+    assert(calc.GetCalledCount() == 0)
+
     # Empty string
     assert(calc.add("") == 0)   # Empty string will return 0
     
@@ -46,5 +59,7 @@ if __name__ == '__main__':
     # Negative numbers will throw an exception
     # assert(calc.add("1,-2,3"))  # single negative value
     # assert(calc.add("1,-2,-3")) # multiple negative values
+
+    assert(calc.GetCalledCount() == 12)
 
     print("ALL TEST CASES PASS FOR UNKNOWN AMOUNT OF NUMBERS")
