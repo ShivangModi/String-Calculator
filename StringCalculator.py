@@ -3,6 +3,7 @@ class StringCalculator:
         if len(numbers) == 0:
             return 0
         
+        if numbers[0:2] == '//':
             numbers = numbers[4:].replace(numbers[2], ',')
         
         numbers = numbers.replace('\n', ',')
@@ -27,4 +28,11 @@ if __name__ == '__main__':
     # handle new lines between numbers (instead of commas)
     assert(calc.add("1\n2,3") == 6)
     assert(calc.add("1\n2") == 3)
+
+    # handle different delimiters
+    # to change a delimiter, the beginning of the string will contain a separate line that looks like this:
+    # "//[delimeter]\n[numbers]"
+    assert(calc.add("//;\n1;2") == 3)
+    assert(calc.add("//;\n1;2;3") == 6)
+
     print("ALL TEST CASES PASS FOR UNKNOWN AMOUNT OF NUMBERS")
