@@ -3,6 +3,8 @@ class StringCalculator:
         if len(numbers) == 0:
             return 0
         
+            numbers = numbers[4:].replace(numbers[2], ',')
+        
         numbers = numbers.replace('\n', ',')
         num = list(map(int, numbers.split(',')))
         return sum(num)
@@ -25,5 +27,4 @@ if __name__ == '__main__':
     # handle new lines between numbers (instead of commas)
     assert(calc.add("1\n2,3") == 6)
     assert(calc.add("1\n2") == 3)
-    
     print("ALL TEST CASES PASS FOR UNKNOWN AMOUNT OF NUMBERS")
