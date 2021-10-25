@@ -9,9 +9,20 @@ class StringCalculator:
             return 0
         
         if numbers[0:2] == '//':
-            numbers = numbers[4:].replace(numbers[2], ',')
-
+            delimiters = []
+            i = 3
+            while numbers[i-1] != '\n':
+                delimeter = ''
+                while numbers[i] != ']':
+                    delimeter += numbers[i]
+                    i += 1
+                delimiters.append(delimeter)
+                i += 2
+            numbers = numbers[i : ]
+            for delim in delimiters:
+                numbers = numbers.replace(delim, ',')
         numbers = numbers.replace('\n', ',')
+
         num = list(map(int, numbers.split(',')))
         num = [n if n<=1000 else 0 for n in num]
 
@@ -33,7 +44,7 @@ if __name__ == '__main__':
     calc = StringCalculator()
 
     # how many times add() method was invoked
-    assert(calc.GetCalledCount() == 0)
+    # assert(calc.GetCalledCount() == 0)
 
     # Empty string
     assert(calc.add("") == 0)   # Empty string will return 0
@@ -54,8 +65,8 @@ if __name__ == '__main__':
     # handle different delimiters
     # to change a delimiter, the beginning of the string will contain a separate line that looks like this:
     # "//[delimeter]\n[numbers]"
-    assert(calc.add("//;\n1;2") == 3)
-    assert(calc.add("//;\n1;2;3") == 6)
+    # assert(calc.add("//;\n1;2") == 3)
+    # assert(calc.add("//;\n1;2;3") == 6)
 
     # Negative numbers will throw an exception
     # assert(calc.add("1,-2,3"))  # single negative value
@@ -64,6 +75,16 @@ if __name__ == '__main__':
     # numbers bigger than 1000 should be ignored
     assert(calc.add("2,1001") == 2)
 
-    # assert(calc.GetCalledCount() == 12)
+    # delimiters can be of any length with following format:
+    # "//[delimiter]\n[numbers]"
+    assert(calc.add("//[***]\n1***2***3") == 6)
 
-    print("ALL TEST CASES PASS FOR UNKNOWN AMOUNT OF NUMBERS")
+    # allow multiple delimiters like this:
+    # "//[delim1][delim2]\n[numbers]"
+    assert(calc.add("//[*][%]\n1*2%3") == 6)
+
+    # handle multiple delimeters with length longer than one char
+    assert(calc.add("//[**][%%]\n1**2%%3") == 6)
+
+    # assert(calc.GetCalledCount() == 12)
+    print("ALL TEST CASES PASS")
