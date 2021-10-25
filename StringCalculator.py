@@ -5,10 +5,18 @@ class StringCalculator:
         
         if numbers[0:2] == '//':
             numbers = numbers[4:].replace(numbers[2], ',')
-        
+
         numbers = numbers.replace('\n', ',')
         num = list(map(int, numbers.split(',')))
-        return sum(num)
+        negative = [str(i) for i in num if i < 0]
+
+        try:
+            if negative != []:
+                raise ValueError("Negative values are not allowed. Negative values: " + ', '.join(negative))
+            else:
+                return sum(num)
+        except ValueError as ve:
+            print(ve)
 
 
 if __name__ == '__main__':
@@ -34,5 +42,8 @@ if __name__ == '__main__':
     # "//[delimeter]\n[numbers]"
     assert(calc.add("//;\n1;2") == 3)
     assert(calc.add("//;\n1;2;3") == 6)
+
+    # Negative numbers will throw an exception
+    assert(calc.add("1,-2,-3"))
 
     print("ALL TEST CASES PASS FOR UNKNOWN AMOUNT OF NUMBERS")
