@@ -13,9 +13,10 @@ class StringCalculator:
 
         numbers = numbers.replace('\n', ',')
         num = list(map(int, numbers.split(',')))
-        negative = [str(i) for i in num if i < 0]
+        num = [n if n<=1000 else 0 for n in num]
 
         try:
+            negative = [str(i) for i in num if i < 0]
             if negative != []:
                 raise ValueError("Negative values are not allowed. Negative values: " + ', '.join(negative))
             else:
@@ -60,6 +61,9 @@ if __name__ == '__main__':
     # assert(calc.add("1,-2,3"))  # single negative value
     # assert(calc.add("1,-2,-3")) # multiple negative values
 
-    assert(calc.GetCalledCount() == 12)
+    # numbers bigger than 1000 should be ignored
+    assert(calc.add("2,1001") == 2)
+
+    # assert(calc.GetCalledCount() == 12)
 
     print("ALL TEST CASES PASS FOR UNKNOWN AMOUNT OF NUMBERS")
