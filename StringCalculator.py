@@ -44,6 +44,7 @@ if __name__ == '__main__':
     assert(calc.add("//;\n1;2;3") == 6)
 
     # Negative numbers will throw an exception
-    assert(calc.add("1,-2,-3"))
+    # assert(calc.add("1,-2,3"))  # single negative value
+    # assert(calc.add("1,-2,-3")) # multiple negative values
 
     print("ALL TEST CASES PASS FOR UNKNOWN AMOUNT OF NUMBERS")
